@@ -1,0 +1,156 @@
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-text">Edit <%= resource_name.to_s.humanize %> Account</h4>
+      </div>
+      <div class="card-block">
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+        <%= devise_error_messages! %>
+
+        <div class="row">
+          <div class="col-md-6">
+           <div class="form-group">
+            <label>
+              Gym Name (Disabled)
+            </label>
+            <%= f.text_field :business_name, autofocus: true, class: "form-control", :disabled => true %>
+          </div>  
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              Email
+            </label>
+            <%= f.email_field :email, class: "form-control" %>
+          </div>
+        </div>
+      </div>
+
+      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+      <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+      <% end %>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              New Password
+            </label>
+            <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              Confirm New Password
+            </label>
+            <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control" %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>
+              Current Password
+            </label>
+            <%= f.password_field :current_password, autocomplete: "off", class: "form-control" %>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.submit "Update Account", class: "btn btn-success" %>
+      </div>
+      <% end %>
+    </div>
+    <div class="card-footer text-muted">
+      Last Updated
+    </div>
+  </div>
+</div>
+
+<% if current_user.subscribed? %>
+<div class="col-md-6">
+  <div class="card">
+    <div class="card-header">
+      <h4 class="card-text">Update Payment Method</h4>
+    </div>
+    <div class="card-block">
+      <p>Your current card on file is:</p>
+      <div><%= current_user.card_type %> Ending in <%= current_user.card_last4 %></div>
+      <div>Expires <%= current_user.card_exp_month %> / <%= current_user.card_exp_year %></div>
+
+      <%= form_tag card_path, method: :put, id: "payment-form" do %>
+
+      <span class="payment-errors"></span>
+
+      <div class="row">
+        <div class="col-md-8">
+          <div class="form-group">
+            <label>
+              Card Number
+            </label>
+            <input class="form-control" type="text" size="20" data-stripe="number"/>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+         <div class="form-group">
+          <label>
+            CVC
+          </label>
+          <input class="form-control" type="text" size="4" data-stripe="cvc"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label>
+            Expiration Month (MM)
+          </label>
+          <input class="form-control" type="text" size="2" data-stripe="exp-month"/>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="form-group">
+          <label>
+            Expiration Year (YYYY)
+          </label>
+          <input class="form-control" type="text" size="4" data-stripe="exp-year"/>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-success" type="submit">Update Card</button>
+
+    <% end %>
+
+  </div>
+  <div class="card-footer text-muted">
+    Last Updated
+  </div>
+</div>
+</div>
+<% end %> 
+</div>
+
+<div class="row page">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-text">Cancel My Account</h4>
+      </div>
+      <div class="card-block">
+
+        <p class="">Unhappy? <%= button_to "Cancel My Account", subscription_path, data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-danger" %></p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<h1>Members</h1>
+
+<%= link_to 'New Member', new_member_path, class: "btn btn-primary" %><br><br>
+
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th class="text-center">First Name</th>
+      <th class="text-center">Last Name</th>
+      <th class="text-center">Email Address</th>
+      <th class="text-center">Phone Number</th>
+      <th class="text-center" colspan="">Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @members.each do |member| %>
+    <tr>
+      <td class="text-center"><%= member.first_name %></td>
+      <td class="text-center"><%= member.last_name %></td>
+      <td class="text-center"><%= member.email_address %></td>
+      <td class="text-center"><%= member.phone_number %></td>
+      <td class="text-center">
+        <div class="dropdown">
+          <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Manage
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <%= link_to 'Show', member, class: "dropdown-item" %>
+            <%= link_to 'Edit', edit_member_path(member), class: "dropdown-item" %>
+            <%= link_to 'Destroy', member, method: :delete, data: { confirm: 'Are you sure?' }, class: "dropdown-item" %>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
